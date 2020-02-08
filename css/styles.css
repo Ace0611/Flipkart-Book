@@ -1,0 +1,95 @@
+.container {
+    max-width: 1200px;
+    min-width: 650px;
+    margin: 0 auto;
+    border: 1px solid black;
+  }
+
+  #title{
+    background-color: lightgray;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .user{
+      display: inline-block;
+  }
+  
+  .chart {
+    display: grid;
+    border: 2px solid #000;
+    position: relative;
+    overflow: hidden;
+    margin: 50px;
+  }
+  
+  .chart-row, .chart-row-content {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    background-color: #dcdcdc;
+  }
+  
+  .chart-period {
+    color: #fff;
+    background-color: #708090 !important;
+    border-bottom: 2px solid #000;
+    border-right: 1px solid #000;
+    grid-template-columns: 50px 2fr 2fr 1fr 1fr 2fr;
+  }
+  
+  .chart-period > div {
+    text-align: center;
+    font-size: 13px;
+    align-self: center;
+    font-weight: bold;
+    padding: 15px 0;
+  }
+  
+  .chart-lines {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    grid-template-columns: 50px 2fr 2fr 1fr 1fr 2fr;
+  }
+  
+  .chart-lines > div {
+    word-wrap: break-word;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+  }
+  
+  .chart-row-item {
+    background-color: #808080;
+    border: 1px solid #000;
+    border-top: 0;
+    border-left: 0;
+    padding: 20px 0;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .chart-row-bars {
+    list-style: none;
+    display: grid;
+    padding: 15px 0;
+    margin: 0;
+    grid-template-columns: 2fr 2fr 1fr 1fr 2fr;
+    grid-gap: 10px 0;
+    border-bottom: 1px solid #000;
+  }
+  
+  li {
+    font-weight: 450;
+    text-align: left;
+    font-size: 15px;
+    min-height: 15px;
+    padding: 5px 15px;
+    color: #000;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+
+  

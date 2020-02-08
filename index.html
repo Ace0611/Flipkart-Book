@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .container {
+        max-width: 1200px;
+        min-width: 650px;
+        margin: 0 auto;
+        border: 1px solid black;
+      }
+
+      #title {
+        background-color: lightgray;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .user {
+        display: inline-block;
+      }
+
+      .chart {
+        display: grid;
+        border: 2px solid #000;
+        position: relative;
+        overflow: hidden;
+        margin: 50px;
+      }
+
+      .chart-row,
+      .chart-row-content {
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        background-color: #dcdcdc;
+      }
+
+      .chart-period {
+        color: #fff;
+        background-color: #708090 !important;
+        border-bottom: 2px solid #000;
+        border-right: 1px solid #000;
+        grid-template-columns: 50px 2fr 2fr 1fr 1fr 2fr;
+      }
+
+      .chart-period > div {
+        text-align: center;
+        font-size: 13px;
+        align-self: center;
+        font-weight: bold;
+        padding: 15px 0;
+      }
+
+      .chart-lines {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: transparent;
+        grid-template-columns: 50px 2fr 2fr 1fr 1fr 2fr;
+      }
+
+      .chart-lines > div {
+        word-wrap: break-word;
+        border-right: 1px solid rgba(0, 0, 0, 0.3);
+      }
+
+      .chart-row-item {
+        background-color: #808080;
+        border: 1px solid #000;
+        border-top: 0;
+        border-left: 0;
+        padding: 20px 0;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .chart-row-bars {
+        list-style: none;
+        display: grid;
+        padding: 15px 0;
+        margin: 0;
+        grid-template-columns: 2fr 2fr 1fr 1fr 2fr;
+        grid-gap: 10px 0;
+        border-bottom: 1px solid #000;
+      }
+
+      li {
+        font-weight: 450;
+        text-align: left;
+        font-size: 15px;
+        min-height: 15px;
+        padding: 5px 15px;
+        color: #000;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+      }
+    </style>
+    <title>Flipkart</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="title">
+        Book club
+        <div class="user">
+          <input type="text" placeholder="User name" id="user-name" />
+          <button id="submit">Submit</button>
+        </div>
+      </div>
+      <div class="chart">
+        <div class="chart-row chart-period">
+          <div class="chart-row-item">Id</div>
+          <span>Title</span>
+          <span>Author</span>
+          <span>Lender</span>
+          <span>Borrower</span>
+          <span>Action</span>
+        </div>
+        <div class="chart-row chart-lines">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="chart-row-content">
+          <div class="chart-row-item">1</div>
+          <ul class="chart-row-bars">
+            <li class="chart-li-one">Book1</li>
+            <li class="chart-li-one">Author1</li>
+            <li class="chart-li-one">UserC</li>
+            <li class="chart-li-one">UserB</li>
+            <button class="chart-li-one">Request Next</button>
+          </ul>
+          <div class="chart-row-item">2</div>
+          <ul class="chart-row-bars">
+            <li class="chart-li-one">Book2</li>
+            <li class="chart-li-one">Author1</li>
+            <li class="chart-li-one">UserC</li>
+            <li class="chart-li-one">UserB</li>
+            <button class="chart-li-one">Request Next</button>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      myNameSpace = (function() {
+        let id = 3;
+        const inputContent = document.querySelector(".chart-row-content");
+        const inputUser = document.querySelector("#user-name");
+        const submit = document.querySelector("#submit");
+        let userName = "";
+        function handleLoad() {
+          return submit.addEventListener("click", freezeUserInput);
+        }
+        function freezeUserInput() {
+          userName = inputUser.value;
+          inputUser.setAttribute("readOnly", true);
+          submit.setAttribute("disabled", true);
+          newInput();
+        }
+        function newInput() {
+          const newId = document.createElement("div");
+          newId.classList.add("chart-row-item");
+          newId.innerText = id;
+          let newData = addNewData();
+          inputContent.appendChild(newId);
+          inputContent.appendChild(newData);
+          id++;
+        }
+        function addNewData() {
+          const newContent = document.createElement("ul");
+          newContent.classList.add("chart-row-bars");
+          newContent.appendChild(addNewLiTag("title", true));
+          newContent.appendChild(addNewLiTag("author", true));
+          newContent.appendChild(addNewLiTag(userName));
+          newContent.appendChild(addNewLiTag("-"));
+          newContent.appendChild(addNewLiTag("Add Book", false, true));
+          return newContent;
+        }
+        function addNewLiTag(placeholder, input, button) {
+          const li_title = document.createElement("li");
+          li_title.classList.add("chart-li-one");
+          if (button) {
+            const buttonAdd = document.createElement("button");
+            buttonAdd.textContent = placeholder;
+            buttonAdd.addEventListener("click", handleAddBook);
+            li_title.appendChild(buttonAdd);
+          } else if (!input) {
+            li_title.textContent = placeholder;
+          } else {
+            const inputTitle = inputTag(placeholder);
+            li_title.appendChild(inputTitle);
+          }
+          return li_title;
+        }
+        function inputTag(placeholder) {
+          const inputElement = document.createElement("input");
+          inputElement.placeholder = placeholder;
+          return inputElement;
+        }
+        function handleAddBook(e) {
+          e.target.setAttribute("disabled", true);
+          newInput();
+        }
+        return {
+          init: handleLoad
+        };
+      })();
+
+      window.addEventListener("load", myNameSpace.init);
+    </script>
+  </body>
+</html>
